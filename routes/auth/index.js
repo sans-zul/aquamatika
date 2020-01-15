@@ -87,6 +87,11 @@ router.post('/in', (req, res, next) => {
             sess.is_active = status[0].is_active;
             sess.date = status[0].date;
             sess.isLogin = 'lewat';
+        } else {
+
+            req.flash('alertMessage', 'Tidak Ada Access');
+            req.flash('alertStatus', 'danger');
+            res.redirect('/auth');
         }
         switch (sess.role_id) {
             case 0: {
