@@ -118,7 +118,7 @@ router.post('/up', (req, res) => {
     const password = req.body.password;
 
     var cols = [nama, 1, email, password, 'default', 4, 1, new Date()];
-    client.query('INSERT INTO users(name, my_id, email, password, image, role_id, is_active, created_at) VALUES($1, $2)', cols, function (err, result) {
+    client.query('INSERT INTO users(name, my_id, email, password, image, role_id, is_active, created_at) VALUES($1, $2, $3, $4, $5, $6, $7, $8)', cols, function (err, result) {
         if (err) {
             req.flash('alertMessage', err.message);
             req.flash('alertStatus', 'danger');
