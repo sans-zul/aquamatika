@@ -121,7 +121,7 @@ router.post('/up', (req, res) => {
         console.log(id);
         var cols = [id, nama, 1, email, password, 'default', 4, 1, new Date()];
 
-        client.query('INSERT INTO users(id, name, my_id, email, password, image, role_id, is_active, created_at) VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9)', cols, function (err, result) {
+        client.query('INSERT INTO users(id, name, my_id, email, password, image, role_id, is_active, created_at) VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9) RETURNING *', cols, function (err, result) {
             if (err) {
                 req.flash('alertMessage', err.message);
                 req.flash('alertStatus', 'danger');
