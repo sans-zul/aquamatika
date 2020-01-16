@@ -113,21 +113,25 @@ router.get('/up', (req, res, next) => {
 });
 
 router.post('/up', (req, res) => {
-    const nama = req.body.name;
-    const email = req.body.email;
-    const password = req.body.password;
+    getUsers().then(function (us) {
+        const nama = req.body.name;
+        const email = req.body.email;
+        const password = req.body.password;
+        const id = us[us.length - 1].id + 1;
+        console.log(id);
+        var cols = [id, nama, 1, email, password, 'default', 4, 1, new Date()];
 
-    var cols = [nama, 1, email, password, 'default', 4, 1, new Date()];
-    client.query('INSERT INTO users(name, my_id, email, password, image, role_id, is_active, created_at) VALUES($1, $2, $3, $4, $5, $6, $7, $8)', cols, function (err, result) {
-        if (err) {
-            req.flash('alertMessage', err.message);
-            req.flash('alertStatus', 'danger');
-            console.log("Error Saving : %s ", err);
-            res.redirect('/auth/up');
-        }
-        req.flash('alertMessage', 'Success Add New Menu');
-        req.flash('alertStatus', 'success');
-        res.redirect('/auth/in');
+        client.query('INSERT INTO users(id, name, my_id, email, password, image, role_id, is_active, created_at) VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9)', cols, function (err, result) {
+            if (err) {
+                req.flash('alertMessage', err.message);
+                req.flash('alertStatus', 'danger');
+                console.log("Error Saving : %s ", err);
+                res.redirect('/auth/up');
+            }
+            req.flash('alertMessage', 'Success');
+            req.flash('alertStatus', 'success');
+            res.redirect('/auth/in');
+        });
     });
 });
 
