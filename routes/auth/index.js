@@ -133,6 +133,7 @@ router.post('/up', (req, res) => {
             req.flash('alertStatus', 'success');
             res.redirect('/auth/in');
         });
+        
     });
 });
 
